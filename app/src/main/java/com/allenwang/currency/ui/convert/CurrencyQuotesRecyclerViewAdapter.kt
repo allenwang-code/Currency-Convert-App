@@ -15,7 +15,8 @@ import com.allenwang.currency.ui.convert.dummy.DummyContent.DummyItem
  * TODO: Replace the implementation with code for your data type.
  */
 class CurrencyQuotesRecyclerViewAdapter(
-    var values: List<CurrencyQuote>
+    var values: List<CurrencyQuote>,
+    var amountToConvert: Int
 ) : RecyclerView.Adapter<CurrencyQuotesRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,7 +28,7 @@ class CurrencyQuotesRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.idView.text = item.currencyCode
-        holder.contentView.text = item.quote.toString()
+        holder.contentView.text = (item.quote * amountToConvert).toString()
     }
 
     override fun getItemCount(): Int = values.size

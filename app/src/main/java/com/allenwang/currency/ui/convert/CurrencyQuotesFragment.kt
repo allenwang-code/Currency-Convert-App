@@ -12,9 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.allenwang.currency.CurrencyApplication
 import com.allenwang.currency.R
 import com.allenwang.currency.data.unity.CurrencyQuote
+import com.jakewharton.rxbinding4.widget.textChangeEvents
+import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_convert_currency_list.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -57,9 +60,17 @@ class CurrencyQuotesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         quotes_list.layoutManager = LinearLayoutManager(context)
-        adapter = CurrencyQuotesRecyclerViewAdapter(emptyList())
+        adapter = CurrencyQuotesRecyclerViewAdapter(emptyList(), 1)
         quotes_list.adapter = adapter
         setupObservers()
+
+        amount_editText.textChangeEvents()
+            .debounce(1, TimeUnit.SECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                adapter?.amountToConvert = it.text.toString().toInt()
+                adapter?.notifyDataSetChanged()
+            }
     }
 
     private fun setupObservers() {

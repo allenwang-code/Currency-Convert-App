@@ -31,6 +31,7 @@ ext {
     recyclerViewVersion = '1.1.0'
     coreKtxVersion = '1.3.2'
     fragmentKtxVersion = '1.3.0'
+    KtxSerializationVersion = "1.0-M1-1.4.0-rc"
 
     appCompatVersion = '1.2.0'
     constraintlayoutVersion = '2.0.4'
