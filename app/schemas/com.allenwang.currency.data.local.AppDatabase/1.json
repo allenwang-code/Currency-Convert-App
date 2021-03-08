@@ -2,48 +2,30 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "25f8d729a3f737c7b6289a577c4845dc",
+    "identityHash": "cc084ac6eedaaaff2266919cb1ae7dc8",
     "entities": [
       {
         "tableName": "supported_currencies",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `success` INTEGER NOT NULL, `terms` TEXT NOT NULL, `privacy` TEXT NOT NULL, `quotes` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`currencyKey` TEXT NOT NULL, `currencyValue` TEXT NOT NULL, PRIMARY KEY(`currencyKey`))",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "success",
-            "columnName": "success",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "terms",
-            "columnName": "terms",
+            "fieldPath": "currencyKey",
+            "columnName": "currencyKey",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "privacy",
-            "columnName": "privacy",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "quotes",
-            "columnName": "quotes",
+            "fieldPath": "currencyValue",
+            "columnName": "currencyValue",
             "affinity": "TEXT",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "currencyKey"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -114,7 +96,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '25f8d729a3f737c7b6289a577c4845dc')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cc084ac6eedaaaff2266919cb1ae7dc8')"
     ]
   }
 }

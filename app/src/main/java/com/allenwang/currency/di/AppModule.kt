@@ -3,10 +3,10 @@ package com.allenwang.currency.di
 import android.content.Context
 import com.allenwang.currency.data.local.AppDatabase
 import com.allenwang.currency.data.local.CClassTypeConverter
-import com.allenwang.currency.data.local.SupportCurrencyDao
-import com.allenwang.currency.data.remote.SupportCurrencyRemoteDataSource
-import com.allenwang.currency.data.remote.SupportCurrencyRetrofitService
-import com.allenwang.currency.data.repository.SupportCurrencyRepository
+import com.allenwang.currency.data.local.SupportedCurrencyDao
+import com.allenwang.currency.data.remote.SupportedCurrencyRemoteDataSource
+import com.allenwang.currency.data.remote.SupportedCurrencyRetrofitService
+import com.allenwang.currency.data.repository.SupportedCurrencyRepository
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -17,8 +17,8 @@ class AppModule(private val applicationContext: Context) {
 
     @Singleton
     @Provides
-    fun provideSupportCurrencyRemoteDataSource(service: SupportCurrencyRetrofitService) =
-        SupportCurrencyRemoteDataSource(service)
+    fun provideSupportCurrencyRemoteDataSource(service: SupportedCurrencyRetrofitService) =
+        SupportedCurrencyRemoteDataSource(service)
 
     @Provides
     fun provideContext() = applicationContext
@@ -38,8 +38,7 @@ class AppModule(private val applicationContext: Context) {
     @Singleton
     @Provides
     fun provideRepository(
-        remoteDataSource: SupportCurrencyRemoteDataSource,
-        supportCurrencyDao: SupportCurrencyDao
-    ) =
-        SupportCurrencyRepository(supportCurrencyDao, remoteDataSource)
+        remoteDataSource: SupportedCurrencyRemoteDataSource,
+        supportedCurrencyDao: SupportedCurrencyDao
+    ) = SupportedCurrencyRepository(supportedCurrencyDao, remoteDataSource)
 }

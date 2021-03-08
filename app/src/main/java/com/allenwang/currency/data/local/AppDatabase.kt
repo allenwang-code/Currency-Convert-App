@@ -7,14 +7,12 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.allenwang.currency.data.unity.CurrencyQuote
 import com.allenwang.currency.data.unity.SupportedCurrency
-import com.squareup.moshi.Moshi
-import javax.inject.Inject
 
 @Database(entities = [SupportedCurrency::class, CurrencyQuote::class], version = 1)
 @TypeConverters(CClassTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun supportedCurrencyDao(): SupportCurrencyDao
+    abstract fun supportedCurrencyDao(): SupportedCurrencyDao
 
     companion object {
         @Volatile private var instance: AppDatabase? = null

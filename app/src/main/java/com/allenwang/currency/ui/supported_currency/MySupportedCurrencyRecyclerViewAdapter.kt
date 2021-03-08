@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.allenwang.currency.R
+import com.allenwang.currency.data.unity.SupportedCurrency
 
 import com.allenwang.currency.ui.supported_currency.dummy.DummyContent.DummyItem
 
@@ -14,7 +15,7 @@ import com.allenwang.currency.ui.supported_currency.dummy.DummyContent.DummyItem
  * TODO: Replace the implementation with code for your data type.
  */
 class MySupportedCurrencyRecyclerViewAdapter(
-    private val values: List<DummyItem>
+    var values: List<SupportedCurrency>
 ) : RecyclerView.Adapter<MySupportedCurrencyRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,8 +26,8 @@ class MySupportedCurrencyRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+        holder.idView.text = item.currencyKey
+        holder.contentView.text = item.currencyValue
     }
 
     override fun getItemCount(): Int = values.size
