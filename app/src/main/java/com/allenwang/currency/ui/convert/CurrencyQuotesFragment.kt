@@ -7,11 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.allenwang.currency.CurrencyApplication
 import com.allenwang.currency.R
 import com.allenwang.currency.data.unity.CurrencyQuote
+import com.allenwang.currency.data.unity.SupportedCurrency
+import com.allenwang.currency.ui.supported_currency.SupportedCurrencyFragment
 import com.jakewharton.rxbinding4.widget.textChangeEvents
 import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -71,6 +74,19 @@ class CurrencyQuotesFragment : Fragment() {
                 adapter?.amountToConvert = it.text.toString().toInt()
                 adapter?.notifyDataSetChanged()
             }
+
+        chosen_currency_button.setOnClickListener {
+            fragmentManager?.beginTransaction()
+                ?.addToBackStack("ConvertCurrencyFragment")
+                ?.add(R.id.root_container, SupportedCurrencyFragment.newInstance())
+                ?.commitAllowingStateLoss()
+        }
+
+        setFragmentResultListener("supportedCurrencyKey") { key, bundle ->
+            val result = bundle.getSerializable("supportedCurrency") as SupportedCurrency
+            chosen_currency_button.text = result.currencyKey
+        }
+
     }
 
     private fun setupObservers() {

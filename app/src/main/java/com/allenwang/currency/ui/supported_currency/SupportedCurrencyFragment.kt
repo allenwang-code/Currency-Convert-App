@@ -90,6 +90,6 @@ class SupportedCurrencyFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = SupportedCurrencyFragment
+        fun newInstance() = SupportedCurrencyFragment()
     }
 }
