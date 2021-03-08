@@ -22,3 +22,4 @@ interface CurrencyRetrofitService {
         @Query("currencies") currencies: String
     ): Observable<CurrencyQuoteResponse>
 }
+

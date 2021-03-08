@@ -20,14 +20,14 @@ class CurrencyQuotesRepository @Inject constructor(
             getCurrencyQuotesFromApi(sourceCode))
     }
 
-    private fun getCurrencyQuotesFromDb(): Observable<List<CurrencyQuote>> {
+    fun getCurrencyQuotesFromDb(): Observable<List<CurrencyQuote>> {
         return currencyQuoteDao.getAllCurrencyQuotes()
             .doOnNext {
                 // Log
             }
     }
 
-    private fun getCurrencyQuotesFromApi(source: String): Observable<List<CurrencyQuote>> {
+    fun getCurrencyQuotesFromApi(source: String): Observable<List<CurrencyQuote>> {
         return currencyQuoteApi.getCurrencyQuote(source)
             .doOnNext {
                 // Log

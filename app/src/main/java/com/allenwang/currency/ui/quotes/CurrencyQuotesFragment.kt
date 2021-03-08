@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.allenwang.currency.CurrencyApplication
@@ -60,6 +61,9 @@ class CurrencyQuotesFragment : Fragment() {
         quotes_list.layoutManager = LinearLayoutManager(context)
         adapter = CurrencyQuotesRecyclerViewAdapter(emptyList(), 1)
         quotes_list.adapter = adapter
+
+        viewModel.getCurrencyQuotes(chosen_currency_button.text.toString())
+        viewModel.updateCurrencyQuotes(chosen_currency_button.text.toString())
         setupObservers()
 
         amount_editText.textChangeEvents()
@@ -85,16 +89,17 @@ class CurrencyQuotesFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.getCurrencyQuotes(chosen_currency_button.text.toString())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                adapter?.values = it
-                adapter?.notifyDataSetChanged()
-                list = it
-            }, {
-                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-            })
+        val quotesObserver = Observer<List<CurrencyQuote>> { quotes ->
+            adapter?.values = quotes
+            adapter?.notifyDataSetChanged()
+        }
+
+        val errorObserver = Observer<Throwable> { error ->
+            Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+        }
+
+        viewModel.error.observe(viewLifecycleOwner, errorObserver)
+        viewModel.quotes.observe(viewLifecycleOwner, quotesObserver)
     }
 
     companion object {
