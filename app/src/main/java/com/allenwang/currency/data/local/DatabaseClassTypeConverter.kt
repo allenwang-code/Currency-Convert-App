@@ -1,11 +1,9 @@
 package com.allenwang.currency.data.local
 
-import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.squareup.moshi.Moshi
 import javax.inject.Inject
 
-// @ProvidedTypeConverter
 class DatabaseClassTypeConverter {
 
     @Inject lateinit var moshi: Moshi

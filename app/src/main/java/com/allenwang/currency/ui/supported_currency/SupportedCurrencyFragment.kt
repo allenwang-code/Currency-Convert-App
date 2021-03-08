@@ -21,9 +21,6 @@ import kotlinx.android.synthetic.main.supported_currency_item_list.*
 import javax.inject.Inject
 
 
-/**
- * A fragment representing a list of Items.
- */
 class SupportedCurrencyFragment : Fragment() {
 
     @Inject

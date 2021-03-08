@@ -32,7 +32,7 @@ class CurrencyQuoteApi @Inject constructor(
     private fun getTimeYesterday(): String {
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.DAY_OF_YEAR, -1)
-        val formatter = SimpleDateFormat("YYYY-MM-dd")
+        val formatter = SimpleDateFormat("YYYY-MM-dd", Locale.ENGLISH)
         return formatter.format(calendar.time)
     }
 }

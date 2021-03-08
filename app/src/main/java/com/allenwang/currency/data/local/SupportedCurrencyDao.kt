@@ -1,13 +1,11 @@
 package com.allenwang.currency.data.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.allenwang.currency.data.unity.SupportedCurrency
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface SupportedCurrencyDao {

@@ -22,10 +22,6 @@ import kotlinx.android.synthetic.main.fragment_convert_currency_list.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-
-/**
- * A fragment representing a list of Items.
- */
 class CurrencyQuotesFragment : Fragment() {
 
     @Inject
@@ -75,13 +71,13 @@ class CurrencyQuotesFragment : Fragment() {
             }
 
         chosen_currency_button.setOnClickListener {
-            fragmentManager?.beginTransaction()
-                ?.addToBackStack("ConvertCurrencyFragment")
-                ?.add(R.id.root_container, SupportedCurrencyFragment.newInstance())
-                ?.commitAllowingStateLoss()
+            parentFragmentManager.beginTransaction()
+                .addToBackStack("ConvertCurrencyFragment")
+                .add(R.id.root_container, SupportedCurrencyFragment.newInstance())
+                .commitAllowingStateLoss()
         }
 
-        setFragmentResultListener("supportedCurrencyKey") { key, bundle ->
+        setFragmentResultListener("supportedCurrencyKey") { _, bundle ->
             val result = bundle.getSerializable("supportedCurrency") as SupportedCurrency
             chosen_currency_button.text = result.currencyKey
         }

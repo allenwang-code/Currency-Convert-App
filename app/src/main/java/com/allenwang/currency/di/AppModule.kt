@@ -22,12 +22,12 @@ class AppModule(private val applicationContext: Context) {
     fun provideContext() = applicationContext
 
     @Provides
-    fun provideCClassTypeConverter(moshi: Moshi) = DatabaseClassTypeConverter()
+    fun provideDatabaseClassTypeConverter() = DatabaseClassTypeConverter()
 
     @Singleton
     @Provides
-    fun provideDatabase(appContext: Context, typeConverter: DatabaseClassTypeConverter) =
-        AppDatabase.getDatabase(appContext, typeConverter)
+    fun provideDatabase(appContext: Context) =
+        AppDatabase.getDatabase(appContext)
 
     @Singleton
     @Provides

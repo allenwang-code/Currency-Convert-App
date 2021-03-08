@@ -17,8 +17,4 @@ class CurrencyQuotesViewModel
                 emptyList()
             }
     }
-
-    override fun onCleared() {
-        super.onCleared()
-    }
 }

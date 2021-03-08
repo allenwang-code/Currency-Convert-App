@@ -18,10 +18,10 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         @Volatile private var instance: AppDatabase? = null
 
-        fun getDatabase(context: Context, typeConverter: DatabaseClassTypeConverter): AppDatabase =
-            instance ?: synchronized(this) { instance ?: buildDatabase(context, typeConverter).also { instance = it } }
+        fun getDatabase(context: Context): AppDatabase =
+            instance ?: synchronized(this) { instance ?: buildDatabase(context).also { instance = it } }
 
-        private fun buildDatabase(appContext: Context, typeConverter: DatabaseClassTypeConverter) =
+        private fun buildDatabase(appContext: Context) =
             Room.databaseBuilder(appContext, AppDatabase::class.java, "currency")
                 .fallbackToDestructiveMigration()
                 .build()
