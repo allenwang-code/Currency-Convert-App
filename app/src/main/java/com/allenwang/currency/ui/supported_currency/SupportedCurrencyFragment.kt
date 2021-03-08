@@ -2,19 +2,25 @@ package com.allenwang.currency.ui.supported_currency
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.allenwang.currency.CurrencyApplication
 import com.allenwang.currency.R
+import com.allenwang.currency.data.unity.SupportedCurrency
+import com.allenwang.currency.util.ClickListener
+import com.allenwang.currency.util.RecyclerViewTouchListener
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.supported_currency_item_list.*
 import javax.inject.Inject
+
 
 /**
  * A fragment representing a list of Items.
@@ -28,6 +34,7 @@ class SupportedCurrencyFragment : Fragment() {
     private var adapter: MySupportedCurrencyRecyclerViewAdapter? = null
 
     private var columnCount = 1
+    var list: List<SupportedCurrency>? = null
 
 
     override fun onAttach(context: Context) {
@@ -56,6 +63,21 @@ class SupportedCurrencyFragment : Fragment() {
         currency_list. layoutManager = LinearLayoutManager(context)
         adapter = MySupportedCurrencyRecyclerViewAdapter(emptyList())
         currency_list.adapter = adapter
+        currency_list.addOnItemTouchListener(
+            RecyclerViewTouchListener(
+                context,
+                currency_list,
+                object : ClickListener {
+                    override fun onClick(view: View?, position: Int) {
+                        val bundle = Bundle()
+                        bundle.putSerializable("supportedCurrency",  list?.get(position))
+                        setFragmentResult("supportedCurrencyKey", bundle)
+                        activity?.supportFragmentManager?.popBackStack();
+                    }
+
+                    override fun onLongClick(view: View?, position: Int) {}
+                })
+        )
         setupObservers()
     }
 
@@ -66,6 +88,7 @@ class SupportedCurrencyFragment : Fragment() {
             .subscribe({
                 adapter?.values = it
                 adapter?.notifyDataSetChanged()
+                list = it
             }, {
                 Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
             })

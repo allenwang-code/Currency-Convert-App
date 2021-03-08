@@ -12,6 +12,7 @@ import javax.inject.Inject
 class SupportedCurrenciesViewModel
 @Inject constructor(private val supportedCurrencyRepository: SupportedCurrencyRepository) : ViewModel() {
 
+
     fun getCurrencies(): Observable<List<SupportedCurrency>> {
         return supportedCurrencyRepository.getSupportedCurrencies()
             .debounce(400, TimeUnit.MILLISECONDS)
@@ -22,4 +23,5 @@ class SupportedCurrenciesViewModel
 
     override fun onCleared() {
         super.onCleared()
-    }}
+    }
+}

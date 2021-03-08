@@ -5,6 +5,7 @@ import com.allenwang.currency.data.remote.SupportedCurrencyRemoteDataSource
 import com.allenwang.currency.data.unity.SupportedCurrency
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,11 +16,9 @@ class SupportedCurrencyRepository @Inject constructor(
 ) {
 
     fun getSupportedCurrencies(): Observable<List<SupportedCurrency>> {
-//        return Observable.concatArray(
-//            getSupportedCurrenciesFromDb(),
-//            getSupportedCurrenciesFromApi())
-
-        return getSupportedCurrenciesFromApi()
+        return Observable.concatArrayEager(
+            getSupportedCurrenciesFromDb(),
+            getSupportedCurrenciesFromApi())
     }
 
     private fun getSupportedCurrenciesFromDb(): Observable<List<SupportedCurrency>> {

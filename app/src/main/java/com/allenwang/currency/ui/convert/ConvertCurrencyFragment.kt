@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import com.allenwang.currency.CurrencyApplication
 import com.allenwang.currency.R
+import com.allenwang.currency.data.unity.SupportedCurrency
 import com.allenwang.currency.ui.convert.dummy.ConvertCurrencyViewModel
 import com.allenwang.currency.ui.convert.dummy.DummyContent
 import com.allenwang.currency.ui.supported_currency.SupportedCurrencyFragment
@@ -66,6 +68,11 @@ class ConvertCurrencyFragment : Fragment() {
                 ?.addToBackStack("ConvertCurrencyFragment")
                 ?.add(R.id.root_container, SupportedCurrencyFragment.newInstance(1))
                 ?.commitAllowingStateLoss()
+        }
+
+        setFragmentResultListener("supportedCurrencyKey") { key, bundle ->
+            val result = bundle.getSerializable("supportedCurrency") as SupportedCurrency
+            chosen_currency_button.text = result.currencyKey
         }
     }
 
