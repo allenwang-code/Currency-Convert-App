@@ -5,7 +5,7 @@ import com.allenwang.currency.data.unity.SupportedCurrency
 import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
-class SupportedCurrencyRemoteDataSource @Inject constructor(
+class SupportedCurrencyApi @Inject constructor(
     private val service: CurrencyRetrofitService
 ) {
     fun getSupportedCurrencies(): Observable<List<SupportedCurrency>> {

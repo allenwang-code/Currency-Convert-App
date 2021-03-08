@@ -1,4 +1,4 @@
-package com.allenwang.currency.ui.convert
+package com.allenwang.currency.ui.quotes
 
 import android.content.Context
 import android.os.Bundle
@@ -16,7 +16,6 @@ import com.allenwang.currency.data.unity.CurrencyQuote
 import com.allenwang.currency.data.unity.SupportedCurrency
 import com.allenwang.currency.ui.supported_currency.SupportedCurrencyFragment
 import com.jakewharton.rxbinding4.widget.textChangeEvents
-import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_convert_currency_list.*

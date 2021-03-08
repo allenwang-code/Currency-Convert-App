@@ -6,7 +6,7 @@ import com.squareup.moshi.Moshi
 import javax.inject.Inject
 
 // @ProvidedTypeConverter
-class CClassTypeConverter {
+class DatabaseClassTypeConverter {
 
     @Inject lateinit var moshi: Moshi
 

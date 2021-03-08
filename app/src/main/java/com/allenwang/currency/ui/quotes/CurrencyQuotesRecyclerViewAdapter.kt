@@ -1,4 +1,4 @@
-package com.allenwang.currency.ui.convert
+package com.allenwang.currency.ui.quotes
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -8,12 +8,6 @@ import android.widget.TextView
 import com.allenwang.currency.R
 import com.allenwang.currency.data.unity.CurrencyQuote
 
-import com.allenwang.currency.ui.convert.dummy.DummyContent.DummyItem
-
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem].
- * TODO: Replace the implementation with code for your data type.
- */
 class CurrencyQuotesRecyclerViewAdapter(
     var values: List<CurrencyQuote>,
     var amountToConvert: Int

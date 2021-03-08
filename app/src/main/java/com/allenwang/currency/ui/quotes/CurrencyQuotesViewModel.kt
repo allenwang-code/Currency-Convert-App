@@ -1,13 +1,9 @@
-package com.allenwang.currency.ui.convert
+package com.allenwang.currency.ui.quotes
 
 import androidx.lifecycle.ViewModel
 import com.allenwang.currency.data.repository.CurrencyQuotesRepository
-import com.allenwang.currency.data.repository.SupportedCurrencyRepository
 import com.allenwang.currency.data.unity.CurrencyQuote
-import com.allenwang.currency.data.unity.SupportedCurrency
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Observable.just
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

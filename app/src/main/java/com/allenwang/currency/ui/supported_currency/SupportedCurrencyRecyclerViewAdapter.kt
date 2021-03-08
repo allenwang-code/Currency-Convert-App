@@ -8,12 +8,6 @@ import android.widget.TextView
 import com.allenwang.currency.R
 import com.allenwang.currency.data.unity.SupportedCurrency
 
-import com.allenwang.currency.ui.supported_currency.dummy.DummyContent.DummyItem
-
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem].
- * TODO: Replace the implementation with code for your data type.
- */
 class SupportedCurrencyRecyclerViewAdapter(
     var values: List<SupportedCurrency>
 ) : RecyclerView.Adapter<SupportedCurrencyRecyclerViewAdapter.ViewHolder>() {

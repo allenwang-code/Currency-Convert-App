@@ -1,8 +1,9 @@
-package com.allenwang.currency
+package com.allenwang.currency.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.allenwang.currency.ui.convert.CurrencyQuotesFragment
+import com.allenwang.currency.R
+import com.allenwang.currency.ui.quotes.CurrencyQuotesFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

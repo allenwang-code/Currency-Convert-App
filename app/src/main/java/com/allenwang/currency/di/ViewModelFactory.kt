@@ -1,9 +1,8 @@
-package com.allenwang.currency.util
+package com.allenwang.currency.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.allenwang.currency.ui.convert.CurrencyQuotesRecyclerViewAdapter
-import com.allenwang.currency.ui.convert.CurrencyQuotesViewModel
+import com.allenwang.currency.ui.quotes.CurrencyQuotesViewModel
 import com.allenwang.currency.ui.supported_currency.SupportedCurrenciesViewModel
 import dagger.Binds
 import dagger.MapKey

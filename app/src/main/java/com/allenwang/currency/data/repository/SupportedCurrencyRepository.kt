@@ -1,18 +1,17 @@
 package com.allenwang.currency.data.repository
 
 import com.allenwang.currency.data.local.SupportedCurrencyDao
-import com.allenwang.currency.data.remote.SupportedCurrencyRemoteDataSource
+import com.allenwang.currency.data.remote.SupportedCurrencyApi
 import com.allenwang.currency.data.unity.SupportedCurrency
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class SupportedCurrencyRepository @Inject constructor(
     private val supportedCurrencyDao: SupportedCurrencyDao,
-    private val supportedCurrencyRemoteDataSource: SupportedCurrencyRemoteDataSource
+    private val supportedCurrencyApi: SupportedCurrencyApi
 ) {
 
     fun getSupportedCurrencies(): Observable<List<SupportedCurrency>> {
@@ -30,7 +29,7 @@ class SupportedCurrencyRepository @Inject constructor(
     }
 
     private fun getSupportedCurrenciesFromApi(): Observable<List<SupportedCurrency>> {
-        return supportedCurrencyRemoteDataSource.getSupportedCurrencies()
+        return supportedCurrencyApi.getSupportedCurrencies()
             .doOnNext {
                 // Log
                 storeSupportedCurrenciesInDb(it)

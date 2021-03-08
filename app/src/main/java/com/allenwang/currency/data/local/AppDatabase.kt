@@ -9,7 +9,7 @@ import com.allenwang.currency.data.unity.CurrencyQuote
 import com.allenwang.currency.data.unity.SupportedCurrency
 
 @Database(entities = [SupportedCurrency::class, CurrencyQuote::class], version = 1)
-@TypeConverters(CClassTypeConverter::class)
+@TypeConverters(DatabaseClassTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun supportedCurrencyDao(): SupportedCurrencyDao
@@ -18,10 +18,10 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         @Volatile private var instance: AppDatabase? = null
 
-        fun getDatabase(context: Context, typeConverter: CClassTypeConverter): AppDatabase =
+        fun getDatabase(context: Context, typeConverter: DatabaseClassTypeConverter): AppDatabase =
             instance ?: synchronized(this) { instance ?: buildDatabase(context, typeConverter).also { instance = it } }
 
-        private fun buildDatabase(appContext: Context, typeConverter: CClassTypeConverter) =
+        private fun buildDatabase(appContext: Context, typeConverter: DatabaseClassTypeConverter) =
             Room.databaseBuilder(appContext, AppDatabase::class.java, "currency")
                 .fallbackToDestructiveMigration()
                 .build()
