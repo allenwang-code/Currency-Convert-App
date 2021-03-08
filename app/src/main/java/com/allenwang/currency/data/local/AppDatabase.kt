@@ -13,6 +13,7 @@ import com.allenwang.currency.data.unity.SupportedCurrency
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun supportedCurrencyDao(): SupportedCurrencyDao
+    abstract fun currencyQuoteDao(): CurrencyQuoteDao
 
     companion object {
         @Volatile private var instance: AppDatabase? = null

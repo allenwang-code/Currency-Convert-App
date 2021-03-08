@@ -1,4 +1,4 @@
-package com.allenwang.currency.ui.supported_currency
+package com.allenwang.currency.ui.convert
 
 import android.content.Context
 import android.os.Bundle
@@ -7,32 +7,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.allenwang.currency.CurrencyApplication
 import com.allenwang.currency.R
-import com.allenwang.currency.data.unity.SupportedCurrency
-import com.allenwang.currency.util.ClickListener
-import com.allenwang.currency.util.RecyclerViewTouchListener
+import com.allenwang.currency.data.unity.CurrencyQuote
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.android.synthetic.main.supported_currency_item_list.*
+import kotlinx.android.synthetic.main.fragment_convert_currency_list.*
 import javax.inject.Inject
 
 
 /**
  * A fragment representing a list of Items.
  */
-class SupportedCurrencyFragment : Fragment() {
+class CurrencyQuotesFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: SupportedCurrenciesViewModel
+    private lateinit var viewModel: CurrencyQuotesViewModel
 
-    private var adapter: SupportedCurrencyRecyclerViewAdapter? = null
+    private var adapter: CurrencyQuotesRecyclerViewAdapter? = null
 
-    var list: List<SupportedCurrency>? = null
+    var list: List<CurrencyQuote>? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -42,41 +39,31 @@ class SupportedCurrencyFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel =
-            ViewModelProvider(this, viewModelFactory)[SupportedCurrenciesViewModel::class.java]
+            ViewModelProvider(this, viewModelFactory)[CurrencyQuotesViewModel::class.java]
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.supported_currency_item_list, container, false)
+        return inflater.inflate(R.layout.fragment_convert_currency_list, container, false)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setupObservers()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        currency_list.layoutManager = LinearLayoutManager(context)
-        adapter = SupportedCurrencyRecyclerViewAdapter(emptyList())
-        currency_list.adapter = adapter
-        currency_list.addOnItemTouchListener(
-            RecyclerViewTouchListener(
-                context,
-                currency_list,
-                object : ClickListener {
-                    override fun onClick(view: View?, position: Int) {
-                        val bundle = Bundle()
-                        bundle.putSerializable("supportedCurrency", list?.get(position))
-                        setFragmentResult("supportedCurrencyKey", bundle)
-                        activity?.supportFragmentManager?.popBackStack();
-                    }
-
-                    override fun onLongClick(view: View?, position: Int) {}
-                })
-        )
+        quotes_list.layoutManager = LinearLayoutManager(context)
+        adapter = CurrencyQuotesRecyclerViewAdapter(emptyList())
+        quotes_list.adapter = adapter
         setupObservers()
     }
 
     private fun setupObservers() {
-        viewModel.getCurrencies()
+        viewModel.getCurrencyQuotes(chosen_currency_button.text.toString())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -90,6 +77,6 @@ class SupportedCurrencyFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = SupportedCurrencyFragment
+        fun newInstance() = CurrencyQuotesFragment()
     }
 }

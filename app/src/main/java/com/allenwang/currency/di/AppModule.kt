@@ -3,9 +3,12 @@ package com.allenwang.currency.di
 import android.content.Context
 import com.allenwang.currency.data.local.AppDatabase
 import com.allenwang.currency.data.local.CClassTypeConverter
+import com.allenwang.currency.data.local.CurrencyQuoteDao
 import com.allenwang.currency.data.local.SupportedCurrencyDao
+import com.allenwang.currency.data.remote.CurrencyQuoteApi
 import com.allenwang.currency.data.remote.SupportedCurrencyRemoteDataSource
-import com.allenwang.currency.data.remote.SupportedCurrencyRetrofitService
+import com.allenwang.currency.data.remote.CurrencyRetrofitService
+import com.allenwang.currency.data.repository.CurrencyQuotesRepository
 import com.allenwang.currency.data.repository.SupportedCurrencyRepository
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -14,11 +17,6 @@ import javax.inject.Singleton
 
 @Module
 class AppModule(private val applicationContext: Context) {
-
-    @Singleton
-    @Provides
-    fun provideSupportCurrencyRemoteDataSource(service: SupportedCurrencyRetrofitService) =
-        SupportedCurrencyRemoteDataSource(service)
 
     @Provides
     fun provideContext() = applicationContext
@@ -37,8 +35,30 @@ class AppModule(private val applicationContext: Context) {
 
     @Singleton
     @Provides
+    fun provideSupportCurrencyRemoteDataSource(service: CurrencyRetrofitService) =
+        SupportedCurrencyRemoteDataSource(service)
+
+    @Singleton
+    @Provides
     fun provideRepository(
         remoteDataSource: SupportedCurrencyRemoteDataSource,
         supportedCurrencyDao: SupportedCurrencyDao
     ) = SupportedCurrencyRepository(supportedCurrencyDao, remoteDataSource)
+
+    @Singleton
+    @Provides
+    fun provideCurrencyQuotesDao(db: AppDatabase) = db.currencyQuoteDao()
+
+    @Singleton
+    @Provides
+    fun provideCurrencyQuotesRemoteDataSource(service: CurrencyRetrofitService) =
+        CurrencyQuoteApi(service)
+
+    @Singleton
+    @Provides
+    fun provideCurrencyQuotesRepository(
+        currencyQuoteDao: CurrencyQuoteDao,
+        currencyQuoteApi: CurrencyQuoteApi
+    ) = CurrencyQuotesRepository(currencyQuoteDao, currencyQuoteApi)
+
 }

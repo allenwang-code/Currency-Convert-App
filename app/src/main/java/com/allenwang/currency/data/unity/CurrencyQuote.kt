@@ -9,12 +9,6 @@ import com.squareup.moshi.Json
 @TypeConverters(CClassTypeConverter::class)
 @Entity(tableName = "currency_quotes")
 data class CurrencyQuote(
-    @Json(name = "success") val success: Boolean,
-    @Json(name = "terms") val terms: String,
-    @Json(name = "privacy") val privacy: String,
-    @Json(name = "historical") val historical: Boolean,
-    @PrimaryKey @Json(name = "date") val date: String,
-    @Json(name = "timestamp") val timestamp: Int,
-    @Json(name = "source") val source: String,
-    @Json(name = "quotes") val quotes: Map<String, Double>
+    @PrimaryKey @Json(name = "currencyCode") val currencyCode: String,
+    @Json(name = "quote") val quote: Double
 )

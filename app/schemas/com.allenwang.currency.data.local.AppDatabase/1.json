@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "cc084ac6eedaaaff2266919cb1ae7dc8",
+    "identityHash": "01e7119a6993476421f18620333f8a02",
     "entities": [
       {
         "tableName": "supported_currencies",
@@ -32,60 +32,24 @@
       },
       {
         "tableName": "currency_quotes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`success` INTEGER NOT NULL, `terms` TEXT NOT NULL, `privacy` TEXT NOT NULL, `historical` INTEGER NOT NULL, `date` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, `source` TEXT NOT NULL, `quotes` TEXT NOT NULL, PRIMARY KEY(`date`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`currencyCode` TEXT NOT NULL, `quote` REAL NOT NULL, PRIMARY KEY(`currencyCode`))",
         "fields": [
           {
-            "fieldPath": "success",
-            "columnName": "success",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "terms",
-            "columnName": "terms",
+            "fieldPath": "currencyCode",
+            "columnName": "currencyCode",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "privacy",
-            "columnName": "privacy",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "historical",
-            "columnName": "historical",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "date",
-            "columnName": "date",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "timestamp",
-            "columnName": "timestamp",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "source",
-            "columnName": "source",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "quotes",
-            "columnName": "quotes",
-            "affinity": "TEXT",
+            "fieldPath": "quote",
+            "columnName": "quote",
+            "affinity": "REAL",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "date"
+            "currencyCode"
           ],
           "autoGenerate": false
         },
@@ -96,7 +60,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cc084ac6eedaaaff2266919cb1ae7dc8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '01e7119a6993476421f18620333f8a02')"
     ]
   }
 }

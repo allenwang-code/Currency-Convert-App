@@ -10,6 +10,8 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_margin="10dp"
+        android:text="1"
+        android:textAlignment="viewEnd"
         android:inputType="number|numberDecimal"
         android:singleLine="true"
         app:layout_constraintEnd_toStartOf="@+id/chosen_currency_button"
@@ -26,11 +28,11 @@
         app:layout_constraintLeft_toRightOf="@+id/amount_editText"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:text="USD"
         tools:text="USD" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
-        android:name="com.allenwang.currency.ui.convert.ConvertCurrencyFragment"
+        android:id="@+id/quotes_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="10dp"
@@ -41,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/amount_editText"
-        tools:context=".ui.convert.ConvertCurrencyFragment"
+        tools:context=".ui.convert.CurrencyQuotesFragment"
         tools:listitem="@layout/fragment_convert_currency" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

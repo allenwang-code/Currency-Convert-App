@@ -2,7 +2,7 @@ package com.allenwang.currency
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.allenwang.currency.ui.convert.ConvertCurrencyFragment
+import com.allenwang.currency.ui.convert.CurrencyQuotesFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
 
         if(savedInstanceState == null) { // initial transaction should be wrapped like this
             supportFragmentManager.beginTransaction()
-                .replace(R.id.root_container, ConvertCurrencyFragment.newInstance(1))
+                .replace(R.id.root_container, CurrencyQuotesFragment.newInstance())
                 .commitAllowingStateLoss()
         }
     }

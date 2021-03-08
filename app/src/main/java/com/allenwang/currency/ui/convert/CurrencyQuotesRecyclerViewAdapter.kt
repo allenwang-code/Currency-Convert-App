@@ -1,4 +1,4 @@
-package com.allenwang.currency.ui.supported_currency
+package com.allenwang.currency.ui.convert
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -6,28 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.allenwang.currency.R
-import com.allenwang.currency.data.unity.SupportedCurrency
+import com.allenwang.currency.data.unity.CurrencyQuote
 
-import com.allenwang.currency.ui.supported_currency.dummy.DummyContent.DummyItem
+import com.allenwang.currency.ui.convert.dummy.DummyContent.DummyItem
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem].
  * TODO: Replace the implementation with code for your data type.
  */
-class MySupportedCurrencyRecyclerViewAdapter(
-    var values: List<SupportedCurrency>
-) : RecyclerView.Adapter<MySupportedCurrencyRecyclerViewAdapter.ViewHolder>() {
+class CurrencyQuotesRecyclerViewAdapter(
+    var values: List<CurrencyQuote>
+) : RecyclerView.Adapter<CurrencyQuotesRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.supported_currency_item, parent, false)
+            .inflate(R.layout.fragment_convert_currency, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.currencyKey
-        holder.contentView.text = item.currencyValue
+        holder.idView.text = item.currencyCode
+        holder.contentView.text = item.quote.toString()
     }
 
     override fun getItemCount(): Int = values.size

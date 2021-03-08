@@ -1,7 +1,7 @@
 package com.allenwang.currency.di
 
 import com.allenwang.currency.BuildConfig
-import com.allenwang.currency.data.remote.SupportedCurrencyRetrofitService
+import com.allenwang.currency.data.remote.CurrencyRetrofitService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -33,13 +33,13 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideLoginRetrofitService(moshiConverterFactory: MoshiConverterFactory, okHttpClient: OkHttpClient): SupportedCurrencyRetrofitService {
+    fun provideLoginRetrofitService(moshiConverterFactory: MoshiConverterFactory, okHttpClient: OkHttpClient): CurrencyRetrofitService {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.CURRENCY_LAYER_URL)
             .addConverterFactory(moshiConverterFactory)
             .client(okHttpClient)
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
-            .create(SupportedCurrencyRetrofitService::class.java)
+            .create(CurrencyRetrofitService::class.java)
     }
 }

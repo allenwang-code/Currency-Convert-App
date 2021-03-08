@@ -7,15 +7,16 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.allenwang.currency.data.unity.CurrencyQuote
 import com.allenwang.currency.data.unity.SupportedCurrency
+import io.reactivex.rxjava3.core.Observable
 
 @Dao
 interface CurrencyQuoteDao {
 
     @Query("SELECT * FROM currency_quotes")
-    fun getAllSupportedCurrencies() : LiveData<List<CurrencyQuote>>
+    fun getAllCurrencyQuotes() : Observable<List<CurrencyQuote>>
 
-    @Query("SELECT * FROM supported_currencies WHERE id = :id")
-    fun getCurrency(id: Int): LiveData<CurrencyQuote>
+    @Query("SELECT * FROM currency_quotes WHERE currencyCode = :currencyCode")
+    fun getCurrencyQuote(currencyCode: String): Observable<CurrencyQuote>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(list: List<CurrencyQuote>)

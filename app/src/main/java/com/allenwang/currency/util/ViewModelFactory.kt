@@ -2,6 +2,8 @@ package com.allenwang.currency.util
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.allenwang.currency.ui.convert.CurrencyQuotesRecyclerViewAdapter
+import com.allenwang.currency.ui.convert.CurrencyQuotesViewModel
 import com.allenwang.currency.ui.supported_currency.SupportedCurrenciesViewModel
 import dagger.Binds
 import dagger.MapKey
@@ -31,7 +33,11 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(SupportedCurrenciesViewModel::class)
-    internal abstract fun postListViewModel(viewModel: SupportedCurrenciesViewModel): ViewModel
+    internal abstract fun supportedCurrenciesViewModel(viewModel: SupportedCurrenciesViewModel): ViewModel
 
-    //Add more ViewModels here
+    @Binds
+    @IntoMap
+    @ViewModelKey(CurrencyQuotesViewModel::class)
+    internal abstract fun currencyQuotesViewModel(viewModel: CurrencyQuotesViewModel): ViewModel
+
 }
