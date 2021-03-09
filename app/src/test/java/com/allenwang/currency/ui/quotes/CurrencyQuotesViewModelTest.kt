@@ -4,8 +4,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.allenwang.currency.RxImmediateSchedulerRule
 import com.allenwang.currency.data.repository.CurrencyQuotesRepository
 import com.allenwang.currency.data.unity.CurrencyQuote
+import com.allenwang.currency.ui.supported_currency.SupportedCurrenciesViewModel
 import com.nhaarman.mockitokotlin2.never
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.plugins.RxJavaPlugins
+import io.reactivex.rxjava3.schedulers.TestScheduler
+import org.hamcrest.CoreMatchers
+import org.hamcrest.MatcherAssert
 import org.junit.Before
 import org.junit.ClassRule
 import org.junit.Rule
@@ -13,6 +18,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
+import java.util.concurrent.TimeUnit
 
 
 class CurrencyQuotesViewModelTest {
@@ -26,6 +32,18 @@ class CurrencyQuotesViewModelTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
+    }
+
+    @Test
+    fun getQuotesLiveData() {
+        val viewModel = CurrencyQuotesViewModel(repository)
+        MatcherAssert.assertThat(viewModel.quotes, CoreMatchers.not(CoreMatchers.nullValue()))
+    }
+
+    @Test
+    fun getErrorLiveData() {
+        val viewModel = CurrencyQuotesViewModel(repository)
+        MatcherAssert.assertThat(viewModel.error, CoreMatchers.not(CoreMatchers.nullValue()))
     }
 
     @Test
@@ -53,9 +71,13 @@ class CurrencyQuotesViewModelTest {
 
     @Test
     fun updateCurrencyQuotes() {
+        val testScheduler = TestScheduler()
+        RxJavaPlugins.setComputationSchedulerHandler { testScheduler }
+
         val viewModel = CurrencyQuotesViewModel(repository)
         viewModel.updateCurrencyQuotes("", 60L)
-        viewModel.updateDisposable?.dispose()
+
+        testScheduler.advanceTimeBy(60, TimeUnit.SECONDS)
         Mockito.verify(repository).getCurrencyQuotesFromApi("")
     }
 

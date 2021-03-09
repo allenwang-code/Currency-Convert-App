@@ -8,15 +8,11 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
-    testOptions.unitTests.includeAndroidResources = true
     testOptions {
         unitTests {
             returnDefaultValues = true
             includeAndroidResources = true
         }
-    }
-    testOptions {
-        unitTests.includeAndroidResources = true
     }
 
     compileOptions {
@@ -81,7 +77,6 @@ dependencies {
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    // implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
 
     // OkHttp
