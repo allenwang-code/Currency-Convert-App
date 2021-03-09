@@ -20,20 +20,6 @@ class CurrencyQuotesViewModelTest {
     @Mock
     private lateinit var repository: CurrencyQuotesRepository
 
-//    @Mock
-//    private lateinit var quotes: MutableLiveData<List<CurrencyQuote>>
-//
-//    @Mock
-//    private lateinit var error: MutableLiveData<Throwable>
-
-    val quotes: MutableLiveData<List<CurrencyQuote>> by lazy {
-        MutableLiveData<List<CurrencyQuote>>()
-    }
-
-    val error: MutableLiveData<Throwable> by lazy {
-        MutableLiveData<Throwable>()
-    }
-
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
@@ -57,8 +43,6 @@ class CurrencyQuotesViewModelTest {
         Mockito.`when`(repository.getCurrencyQuotesFromDb()).thenReturn(Observable.just(apiList))
 
         val viewModel = CurrencyQuotesViewModel(repository)
-        // viewModel.quotes = quotes
-        // viewModel.error = error
         viewModel.getCurrencyQuotes("")
         Mockito.verify(repository, never()).getCurrencyQuotesFromApi("")
     }
