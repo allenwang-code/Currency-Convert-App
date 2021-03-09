@@ -1,5 +1,6 @@
 package com.allenwang.currency.ui.supported_currency
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.allenwang.currency.data.repository.CurrencyQuotesRepository
 import com.allenwang.currency.data.repository.SupportedCurrencyRepository
 import com.allenwang.currency.ui.quotes.CurrencyQuotesViewModel
@@ -9,10 +10,14 @@ import org.junit.Before
 import org.junit.Test
 
 import org.junit.Assert.*
+import org.junit.Rule
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
 class SupportedCurrenciesViewModelTest {
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
     private lateinit var repository: SupportedCurrencyRepository

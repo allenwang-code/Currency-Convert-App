@@ -1,21 +1,24 @@
 package com.allenwang.currency.ui.quotes
 
-import androidx.lifecycle.MutableLiveData
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.allenwang.currency.RxImmediateSchedulerRule
 import com.allenwang.currency.data.repository.CurrencyQuotesRepository
 import com.allenwang.currency.data.unity.CurrencyQuote
 import com.nhaarman.mockitokotlin2.never
 import io.reactivex.rxjava3.core.Observable
 import org.junit.Before
-import org.junit.Test
-
-import org.junit.Assert.*
 import org.junit.ClassRule
+import org.junit.Rule
+import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
+
 class CurrencyQuotesViewModelTest {
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
     private lateinit var repository: CurrencyQuotesRepository
@@ -51,7 +54,7 @@ class CurrencyQuotesViewModelTest {
     @Test
     fun updateCurrencyQuotes() {
         val viewModel = CurrencyQuotesViewModel(repository)
-        viewModel.updateCurrencyQuotes("",60L)
+        viewModel.updateCurrencyQuotes("", 60L)
         viewModel.updateDisposable?.dispose()
         Mockito.verify(repository).getCurrencyQuotesFromApi("")
     }
