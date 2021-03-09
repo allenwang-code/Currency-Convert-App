@@ -41,6 +41,7 @@ class CurrencyQuotesViewModelTest {
     fun getCurrencyQuotesFromAPIIfDbIsNotNull() {
         val apiList = listOf(CurrencyQuote("OOXX", 123.123))
         Mockito.`when`(repository.getCurrencyQuotesFromDb()).thenReturn(Observable.just(apiList))
+        Mockito.`when`(repository.getCurrencyQuotesFromApi("")).thenReturn(Observable.empty())
 
         val viewModel = CurrencyQuotesViewModel(repository)
         viewModel.getCurrencyQuotes("")
@@ -50,7 +51,8 @@ class CurrencyQuotesViewModelTest {
     @Test
     fun updateCurrencyQuotes() {
         val viewModel = CurrencyQuotesViewModel(repository)
-        viewModel.updateCurrencyQuotes("",1)
+        viewModel.updateCurrencyQuotes("",60L)
+        viewModel.updateDisposable?.dispose()
         Mockito.verify(repository).getCurrencyQuotesFromApi("")
     }
 
