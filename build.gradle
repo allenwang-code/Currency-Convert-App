@@ -38,6 +38,8 @@ ext {
     appCompatVersion = '1.2.0'
     constraintlayoutVersion = '2.0.4'
     junitVersion = '4.12'
+    archTestingVersion = '2.1.0'
+    coroutinesVersion = '1.2.1'
     testExtVersion = '1.1.1'
     espressoVersion = '3.3.0'
     roomVersion = "2.3.0-beta02"

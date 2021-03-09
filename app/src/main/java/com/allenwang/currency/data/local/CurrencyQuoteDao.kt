@@ -21,4 +21,6 @@ interface CurrencyQuoteDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(currencyQuote: CurrencyQuote)
+
+    /** Can add update/delete if needed **/
 }
