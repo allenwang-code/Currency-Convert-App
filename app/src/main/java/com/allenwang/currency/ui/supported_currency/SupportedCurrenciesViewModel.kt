@@ -24,7 +24,7 @@ class SupportedCurrenciesViewModel
         MutableLiveData<Throwable>()
     }
 
-    var compositeDisposable = CompositeDisposable()
+    private var compositeDisposable = CompositeDisposable()
 
     fun getCurrencies() {
         compositeDisposable.add(

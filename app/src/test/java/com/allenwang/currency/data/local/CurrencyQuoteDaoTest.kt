@@ -24,8 +24,6 @@ class CurrencyQuoteDaoTest {
 
     @Before
     fun initDb() {
-        // using an in-memory database because the information stored here disappears when the
-        // process is killed
         database = Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
             AppDatabase::class.java

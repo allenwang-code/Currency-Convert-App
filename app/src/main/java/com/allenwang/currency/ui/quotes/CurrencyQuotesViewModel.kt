@@ -24,7 +24,7 @@ class CurrencyQuotesViewModel
         MutableLiveData<Throwable>()
     }
 
-    var compositeDisposable = CompositeDisposable()
+    private var compositeDisposable = CompositeDisposable()
 
     fun getCurrencyQuotes(sourceCode: String) {
         compositeDisposable.add(
@@ -43,9 +43,9 @@ class CurrencyQuotesViewModel
         )
     }
 
-    fun updateCurrencyQuotes(sourceCode: String) {
+    fun updateCurrencyQuotes(sourceCode: String, secondToUpdate: Long) {
         compositeDisposable.add(
-            Observable.interval(30, TimeUnit.MINUTES)
+            Observable.interval(secondToUpdate, TimeUnit.MINUTES)
                 .flatMap {
                     currencyQuotesRepository.getCurrencyQuotesFromApi(sourceCode)
                 }

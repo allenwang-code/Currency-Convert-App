@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">currency</string>
+    <string name="inputError">The amount is wrong, please check</string>
 </resources>

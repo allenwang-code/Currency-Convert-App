@@ -15,9 +15,9 @@ import org.robolectric.annotation.Config
 class AppDatabaseTest {
 
      @Test
-     fun createInstance_AsSingleTon() {
+     fun createInstanceAsSingleTon() {
           val instance = AppDatabase.getDatabase(systemContext)
-          assertThat(instance, `not`(nullValue()))
+          assertThat(instance, not(nullValue()))
 
           val instance2 = AppDatabase.getDatabase(systemContext)
           assertThat(instance, `is`(instance2))

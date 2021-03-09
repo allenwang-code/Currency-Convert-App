@@ -20,7 +20,10 @@ import com.allenwang.currency.ui.supported_currency.SupportedCurrencyFragment.Co
 import com.allenwang.currency.ui.supported_currency.SupportedCurrencyFragment.Companion.SUPPORTED_CURRENCY_SERIALIZABLE_KEY
 import com.jakewharton.rxbinding4.widget.textChangeEvents
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Observable.just
 import kotlinx.android.synthetic.main.fragment_convert_currency_list.*
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -49,20 +52,24 @@ class CurrencyQuotesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
         setupObservers()
-        setUpUIEventsLisentner()
+        setUpUIEventsListener()
 
         viewModel.getCurrencyQuotes(chosen_currency_button.text.toString())
-        viewModel.updateCurrencyQuotes(chosen_currency_button.text.toString())
+        viewModel.updateCurrencyQuotes(chosen_currency_button.text.toString(), 30)
     }
 
-    private fun setUpUIEventsLisentner() {
+    private fun setUpUIEventsListener() {
         amount_editText.textChangeEvents()
             .debounce(1, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
+            .subscribe ({
                 adapter?.amountToConvert = it.text.toString().toInt()
                 adapter?.notifyDataSetChanged()
-            }
+            }, {
+                amount_editText.setText("1")
+                val errorMsg = context?.getString(R.string.inputError)
+                Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
+            })
 
         chosen_currency_button.setOnClickListener {
             parentFragmentManager.beginTransaction()

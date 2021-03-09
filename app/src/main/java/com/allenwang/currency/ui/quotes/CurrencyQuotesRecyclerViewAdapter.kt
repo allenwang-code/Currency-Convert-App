@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.allenwang.currency.R
 import com.allenwang.currency.data.unity.CurrencyQuote
+import com.allenwang.currency.util.QuoteUtil
 
 class CurrencyQuotesRecyclerViewAdapter(
     var values: List<CurrencyQuote>,
@@ -22,7 +23,7 @@ class CurrencyQuotesRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.idView.text = item.currencyCode
-        holder.contentView.text = (item.quote * amountToConvert).toString()
+        holder.contentView.text = QuoteUtil.calculate(item.quote, amountToConvert).toString()
     }
 
     override fun getItemCount(): Int = values.size
