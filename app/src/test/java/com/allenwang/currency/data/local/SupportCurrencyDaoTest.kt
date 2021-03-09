@@ -11,6 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -50,9 +51,9 @@ class SupportCurrencyDaoTest {
 
         val loaded = database.supportedCurrencyDao().getSupportedCurrency(currency.currencyKey).blockingFirst()
 
-        MatcherAssert.assertThat<SupportedCurrency>(loaded, CoreMatchers.notNullValue())
-        MatcherAssert.assertThat(loaded.currencyKey, `is`(currency.currencyKey))
-        MatcherAssert.assertThat(loaded.currencyValue, `is`(currency.currencyValue))
+        assertThat<SupportedCurrency>(loaded, CoreMatchers.notNullValue())
+        assertThat(loaded.currencyKey, `is`(currency.currencyKey))
+        assertThat(loaded.currencyValue, `is`(currency.currencyValue))
     }
 
     @Test
@@ -64,8 +65,8 @@ class SupportCurrencyDaoTest {
         database.supportedCurrencyDao().insert(newCurrency)
 
         val loaded = database.supportedCurrencyDao().getSupportedCurrency(currency.currencyKey).blockingFirst()
-        MatcherAssert.assertThat(loaded.currencyKey, `is`(newCurrency.currencyKey))
-        MatcherAssert.assertThat(loaded.currencyValue, `is`(newCurrency.currencyValue))
+        assertThat(loaded.currencyKey, `is`(newCurrency.currencyKey))
+        assertThat(loaded.currencyValue, `is`(newCurrency.currencyValue))
     }
 
     @Test
@@ -75,8 +76,8 @@ class SupportCurrencyDaoTest {
 
         val quotes = database.supportedCurrencyDao().getAllSupportedCurrencies().blockingFirst()
 
-        MatcherAssert.assertThat(quotes.size, CoreMatchers.`is`(1))
-        MatcherAssert.assertThat(quotes[0].currencyKey, `is`(currency.currencyKey))
-        MatcherAssert.assertThat(quotes[0].currencyValue, `is`(currency.currencyValue))
+        assertThat(quotes.size, CoreMatchers.`is`(1))
+        assertThat(quotes[0].currencyKey, `is`(currency.currencyKey))
+        assertThat(quotes[0].currencyValue, `is`(currency.currencyValue))
     }
 }
