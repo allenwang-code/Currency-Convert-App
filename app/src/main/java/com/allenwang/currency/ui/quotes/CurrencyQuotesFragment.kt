@@ -55,7 +55,7 @@ class CurrencyQuotesFragment : Fragment() {
         setUpUIEventsListener()
 
         viewModel.getCurrencyQuotes(chosen_currency_button.text.toString())
-        viewModel.updateCurrencyQuotes(chosen_currency_button.text.toString(), 30)
+        viewModel.updateCurrencyQuotes(chosen_currency_button.text.toString(), 30 * 60)
     }
 
     private fun setUpUIEventsListener() {
@@ -81,6 +81,9 @@ class CurrencyQuotesFragment : Fragment() {
         setFragmentResultListener(SUPPORTED_CURRENCY_REQUEST_KEY) { _, bundle ->
             val result = bundle.getSerializable(SUPPORTED_CURRENCY_SERIALIZABLE_KEY) as SupportedCurrency
             chosen_currency_button.text = result.currencyKey
+            viewModel.updateDisposable?.dispose()
+            viewModel.getCurrencyQuotes(chosen_currency_button.text.toString())
+            viewModel.updateCurrencyQuotes(chosen_currency_button.text.toString(), 30 * 60)
         }
     }
 

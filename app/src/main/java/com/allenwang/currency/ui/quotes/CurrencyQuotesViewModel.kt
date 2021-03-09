@@ -8,8 +8,8 @@ import com.allenwang.currency.data.unity.CurrencyQuote
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -24,6 +24,7 @@ class CurrencyQuotesViewModel
         MutableLiveData<Throwable>()
     }
 
+    var updateDisposable: Disposable? = null
     private var compositeDisposable = CompositeDisposable()
 
     fun getCurrencyQuotes(sourceCode: String) {
@@ -43,9 +44,9 @@ class CurrencyQuotesViewModel
         )
     }
 
-    fun updateCurrencyQuotes(sourceCode: String, secondToUpdate: Long) {
-        compositeDisposable.add(
-            Observable.interval(secondToUpdate, TimeUnit.MINUTES)
+    fun updateCurrencyQuotes(sourceCode: String, secondsToUpdate: Long) {
+        updateDisposable =
+            Observable.interval(secondsToUpdate, TimeUnit.SECONDS)
                 .flatMap {
                     currencyQuotesRepository.getCurrencyQuotesFromApi(sourceCode)
                 }
@@ -54,6 +55,12 @@ class CurrencyQuotesViewModel
                 }, {
                     error.value = it
                 })
-        )
+
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        updateDisposable?.dispose()
+        compositeDisposable.clear()
     }
 }
