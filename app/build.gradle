@@ -58,8 +58,8 @@ dependencies {
 
     // Room
     implementation "androidx.room:room-runtime:$roomVersion"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation "androidx.legacy:legacy-support-v4:$androidLegacySupportVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$roomVersion"
@@ -84,15 +84,12 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:$rxVersion"
     implementation "io.reactivex.rxjava3:rxandroid:$rxAndroidversions"
     implementation "com.squareup.retrofit2:adapter-rxjava3:$rxjavaAdapterVersion"
-    implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
-    implementation 'com.jakewharton.rxbinding4:rxbinding-core:4.0.0'
-    implementation 'com.jakewharton.rxbinding4:rxbinding-appcompat:4.0.0'
-    implementation 'com.jakewharton.rxbinding4:rxbinding-material:4.0.0'
-    implementation 'com.jakewharton.rxbinding4:rxbinding-leanback:4.0.0'
+    implementation "com.jakewharton.rxbinding4:rxbinding:$rxBinddversions"
 
-    // testImplementation "androidx.room:room-testing:$roomVersion"
     testImplementation "junit:junit:$junitVersion"
     testImplementation "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
+    testImplementation "org.mockito:mockito-core:$mochitoVersion"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mochitoKolinVersion"
 
     androidTestImplementation "androidx.test.ext:junit:$testExtVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
