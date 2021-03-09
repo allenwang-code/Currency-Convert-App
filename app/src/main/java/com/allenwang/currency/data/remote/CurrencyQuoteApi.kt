@@ -2,6 +2,7 @@ package com.allenwang.currency.data.remote
 
 import com.allenwang.currency.BuildConfig
 import com.allenwang.currency.data.unity.CurrencyQuote
+import com.allenwang.currency.util.CalendarUtil.Companion.getTimeYesterday
 import io.reactivex.rxjava3.core.Observable
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,12 +28,5 @@ class CurrencyQuoteApi @Inject constructor(
             }.flatMap {
                 Observable.just(it)
             }
-    }
-
-    private fun getTimeYesterday(): String {
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.DAY_OF_YEAR, -1)
-        val formatter = SimpleDateFormat("YYYY-MM-dd", Locale.ENGLISH)
-        return formatter.format(calendar.time)
     }
 }

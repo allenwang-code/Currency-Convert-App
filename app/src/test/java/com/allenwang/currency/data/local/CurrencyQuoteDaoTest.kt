@@ -1,35 +1,26 @@
 package com.allenwang.currency.data.local
 
 import android.os.Build
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.allenwang.currency.data.unity.CurrencyQuote
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
-@ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 @SmallTest
 @Config(sdk = [Build.VERSION_CODES.O])
 class CurrencyQuoteDaoTest {
 
     private lateinit var database: AppDatabase
-
-    // Executes each quote synchronously using Architecture Components.
-    @get:Rule
-    var instantExecutorRule = InstantTaskExecutorRule()
 
     @Before
     fun initDb() {
@@ -45,7 +36,7 @@ class CurrencyQuoteDaoTest {
     fun closeDb() = database.close()
 
     @Test
-    fun insertTaskAndGetById() {
+    fun insertQuoteAndGetByCode() {
         // GIVEN - insert a quote
         val currencyQuote = CurrencyQuote("code", 123.123)
         database.currencyQuoteDao().insert(currencyQuote)
@@ -60,7 +51,7 @@ class CurrencyQuoteDaoTest {
     }
 
     @Test
-    fun insertTaskReplacesOnConflict() {
+    fun insertQuoteReplacesOnConflict() {
         // Given that a quote is inserted
         val currencyQuote = CurrencyQuote("code", 123.123)
         database.currencyQuoteDao().insert(currencyQuote)
@@ -76,7 +67,7 @@ class CurrencyQuoteDaoTest {
     }
 
     @Test
-    fun insertTaskAndGetTasks() {
+    fun insertQuoteAndGetQuotes() {
         // GIVEN - insert a quote
         val currencyQuote = CurrencyQuote("code", 123.123)
         database.currencyQuoteDao().insert(currencyQuote)

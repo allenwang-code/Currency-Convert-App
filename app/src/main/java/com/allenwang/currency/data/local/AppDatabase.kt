@@ -9,7 +9,6 @@ import com.allenwang.currency.data.unity.CurrencyQuote
 import com.allenwang.currency.data.unity.SupportedCurrency
 
 @Database(entities = [SupportedCurrency::class, CurrencyQuote::class], version = 1)
-@TypeConverters(DatabaseClassTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun supportedCurrencyDao(): SupportedCurrencyDao

@@ -2,7 +2,6 @@ package com.allenwang.currency.di
 
 import android.content.Context
 import com.allenwang.currency.data.local.AppDatabase
-import com.allenwang.currency.data.local.DatabaseClassTypeConverter
 import com.allenwang.currency.data.local.CurrencyQuoteDao
 import com.allenwang.currency.data.local.SupportedCurrencyDao
 import com.allenwang.currency.data.remote.CurrencyQuoteApi
@@ -10,7 +9,6 @@ import com.allenwang.currency.data.remote.SupportedCurrencyApi
 import com.allenwang.currency.data.remote.CurrencyRetrofitService
 import com.allenwang.currency.data.repository.CurrencyQuotesRepository
 import com.allenwang.currency.data.repository.SupportedCurrencyRepository
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -20,9 +18,6 @@ class AppModule(private val applicationContext: Context) {
 
     @Provides
     fun provideContext() = applicationContext
-
-    @Provides
-    fun provideDatabaseClassTypeConverter() = DatabaseClassTypeConverter()
 
     @Singleton
     @Provides
