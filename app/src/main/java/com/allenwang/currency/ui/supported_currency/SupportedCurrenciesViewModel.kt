@@ -8,6 +8,7 @@ import com.allenwang.currency.data.unity.CurrencyQuote
 import com.allenwang.currency.data.unity.SupportedCurrency
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -23,17 +24,26 @@ class SupportedCurrenciesViewModel
         MutableLiveData<Throwable>()
     }
 
+    var compositeDisposable = CompositeDisposable()
+
     fun getCurrencies() {
-        supportedCurrencyRepository.getSupportedCurrencies()
-            .debounce(400, TimeUnit.MILLISECONDS)
-            .onErrorReturn {
-                emptyList()
-            }.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                supportedCurrency.value = it
-            }, {
-                error.value = it
-            })
+        compositeDisposable.add(
+            supportedCurrencyRepository.getSupportedCurrencies()
+                .debounce(400, TimeUnit.MILLISECONDS)
+                .onErrorReturn {
+                    emptyList()
+                }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    supportedCurrency.value = it
+                }, {
+                    error.value = it
+                })
+        )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
     }
 }

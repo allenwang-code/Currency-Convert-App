@@ -16,9 +16,10 @@ import com.allenwang.currency.R
 import com.allenwang.currency.data.unity.CurrencyQuote
 import com.allenwang.currency.data.unity.SupportedCurrency
 import com.allenwang.currency.ui.supported_currency.SupportedCurrencyFragment
+import com.allenwang.currency.ui.supported_currency.SupportedCurrencyFragment.Companion.SUPPORTED_CURRENCY_REQUEST_KEY
+import com.allenwang.currency.ui.supported_currency.SupportedCurrencyFragment.Companion.SUPPORTED_CURRENCY_SERIALIZABLE_KEY
 import com.jakewharton.rxbinding4.widget.textChangeEvents
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_convert_currency_list.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -48,13 +49,13 @@ class CurrencyQuotesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
         setupObservers()
-        setUpUIEventsLisenter()
+        setUpUIEventsLisentner()
 
         viewModel.getCurrencyQuotes(chosen_currency_button.text.toString())
         viewModel.updateCurrencyQuotes(chosen_currency_button.text.toString())
     }
 
-    private fun setUpUIEventsLisenter() {
+    private fun setUpUIEventsLisentner() {
         amount_editText.textChangeEvents()
             .debounce(1, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
@@ -70,8 +71,8 @@ class CurrencyQuotesFragment : Fragment() {
                 .commitAllowingStateLoss()
         }
 
-        setFragmentResultListener("supportedCurrencyKey") { _, bundle ->
-            val result = bundle.getSerializable("supportedCurrency") as SupportedCurrency
+        setFragmentResultListener(SUPPORTED_CURRENCY_REQUEST_KEY) { _, bundle ->
+            val result = bundle.getSerializable(SUPPORTED_CURRENCY_SERIALIZABLE_KEY) as SupportedCurrency
             chosen_currency_button.text = result.currencyKey
         }
     }

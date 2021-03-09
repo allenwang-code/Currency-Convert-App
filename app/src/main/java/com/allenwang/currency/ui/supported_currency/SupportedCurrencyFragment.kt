@@ -63,10 +63,10 @@ class SupportedCurrencyFragment : Fragment() {
 
                     private fun goBackToQuoteFragment(position: Int) {
                         val bundle = Bundle()
-                        bundle.putSerializable("supportedCurrency",
+                        bundle.putSerializable(SUPPORTED_CURRENCY_SERIALIZABLE_KEY,
                             viewModel.supportedCurrency.value?.get(position)
                         )
-                        setFragmentResult("supportedCurrencyKey", bundle)
+                        setFragmentResult(SUPPORTED_CURRENCY_REQUEST_KEY, bundle)
                         activity?.supportFragmentManager?.popBackStack();
                     }
 
@@ -90,6 +90,9 @@ class SupportedCurrencyFragment : Fragment() {
     }
 
     companion object {
+        const val SUPPORTED_CURRENCY_SERIALIZABLE_KEY = "supportedCurrency"
+        const val SUPPORTED_CURRENCY_REQUEST_KEY = "supportedCurrencyKey"
+
         @JvmStatic
         fun newInstance() = SupportedCurrencyFragment()
     }
