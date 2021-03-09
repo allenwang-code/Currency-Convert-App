@@ -14,12 +14,6 @@ class CurrencyQuotesRepository @Inject constructor(
     private val currencyQuoteApi: CurrencyQuoteApi
 ) {
 
-    fun getSupportedCurrencies(sourceCode: String): Observable<List<CurrencyQuote>> {
-        return Observable.concatArrayEager(
-            getCurrencyQuotesFromDb(),
-            getCurrencyQuotesFromApi(sourceCode))
-    }
-
     fun getCurrencyQuotesFromDb(): Observable<List<CurrencyQuote>> {
         return currencyQuoteDao.getAllCurrencyQuotes()
             .doOnNext {
