@@ -14,7 +14,7 @@ interface ClickListener {
     fun onLongClick(view: View?, position: Int)
 }
 
-class RecyclerViewTouchListener(
+open class RecyclerViewTouchListener(
     context: Context?,
     recyclerView: RecyclerView,
     val clickListener: ClickListener?

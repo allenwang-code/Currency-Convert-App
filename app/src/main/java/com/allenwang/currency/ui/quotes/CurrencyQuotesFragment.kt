@@ -27,19 +27,13 @@ class CurrencyQuotesFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private lateinit var viewModel: CurrencyQuotesViewModel
-
     private var adapter: CurrencyQuotesRecyclerViewAdapter? = null
-
-    var list: List<CurrencyQuote>? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity().application as CurrencyApplication).appComponent?.inject(this)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         viewModel =
             ViewModelProvider(this, viewModelFactory)[CurrencyQuotesViewModel::class.java]
     }
@@ -50,22 +44,17 @@ class CurrencyQuotesFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_convert_currency_list, container, false)
     }
-
-    override fun onStart() {
-        super.onStart()
-        setupObservers()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        quotes_list.layoutManager = LinearLayoutManager(context)
-        adapter = CurrencyQuotesRecyclerViewAdapter(emptyList(), 1)
-        quotes_list.adapter = adapter
+        setUpRecyclerView()
+        setupObservers()
+        setUpUIEventsLisenter()
 
         viewModel.getCurrencyQuotes(chosen_currency_button.text.toString())
         viewModel.updateCurrencyQuotes(chosen_currency_button.text.toString())
-        setupObservers()
+    }
 
+    private fun setUpUIEventsLisenter() {
         amount_editText.textChangeEvents()
             .debounce(1, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
@@ -85,7 +74,12 @@ class CurrencyQuotesFragment : Fragment() {
             val result = bundle.getSerializable("supportedCurrency") as SupportedCurrency
             chosen_currency_button.text = result.currencyKey
         }
+    }
 
+    private fun setUpRecyclerView() {
+        quotes_list.layoutManager = LinearLayoutManager(context)
+        adapter = CurrencyQuotesRecyclerViewAdapter(emptyList(), 1)
+        quotes_list.adapter = adapter
     }
 
     private fun setupObservers() {
