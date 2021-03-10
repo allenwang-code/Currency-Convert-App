@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.allenwang.currency.RxImmediateSchedulerRule
 import com.allenwang.currency.data.repository.CurrencyQuotesRepository
 import com.allenwang.currency.data.unity.CurrencyQuote
-import com.allenwang.currency.ui.supported_currency.SupportedCurrenciesViewModel
 import com.nhaarman.mockitokotlin2.never
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
