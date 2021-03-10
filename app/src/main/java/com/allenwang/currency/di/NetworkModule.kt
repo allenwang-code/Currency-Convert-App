@@ -33,7 +33,7 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideLoginRetrofitService(moshiConverterFactory: MoshiConverterFactory, okHttpClient: OkHttpClient): CurrencyRetrofitService {
+    fun provideCurrencyRetrofitService(moshiConverterFactory: MoshiConverterFactory, okHttpClient: OkHttpClient): CurrencyRetrofitService {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.CURRENCY_LAYER_URL)
             .addConverterFactory(moshiConverterFactory)
