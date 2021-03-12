@@ -56,11 +56,9 @@ class CurrencyQuotesViewModel
                 .flatMap {
                     currencyQuotesRepository.getCurrencyQuotesFromApi(sourceCode)
                 }
-                .subscribe({
+                .subscribe {
                     Log.d("CurrencyQuotesViewModel", "update: $it from api")
-                }, {
-                    error.value = it
-                })
+                }
 
     }
 
