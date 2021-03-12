@@ -9,6 +9,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import io.reactivex.rxjava3.schedulers.TestScheduler
 import org.hamcrest.CoreMatchers
+import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert
 import org.junit.*
 import org.mockito.Mock
@@ -74,6 +75,38 @@ class CurrencyQuotesViewModelTest {
         viewModel.getCurrencyQuotes("")
         Mockito.verify(repository, never()).getCurrencyQuotesFromApi("")
         Assert.assertThat(viewModel.quotes.value, CoreMatchers.`is`(apiList))
+        Assert.assertThat(viewModel.loading.value, CoreMatchers.`is`(false))
+    }
+
+    @Test
+    fun getCurrencyQuotesIfDbError() {
+        val apiList = listOf(CurrencyQuote("OOXX", 123.123))
+        val error = Error("db error")
+        Mockito.`when`(repository.getCurrencyQuotesFromDb()).thenReturn(Observable.error(error))
+        Mockito.`when`(repository.getCurrencyQuotesFromApi("")).thenReturn(Observable.just(apiList))
+
+        val viewModel = CurrencyQuotesViewModel(repository)
+
+        viewModel.getCurrencyQuotes("")
+        Mockito.verify(repository, never()).getCurrencyQuotesFromApi("")
+        Assert.assertThat(viewModel.error.value, CoreMatchers.`is`(error))
+        Assert.assertThat(viewModel.loading.value, CoreMatchers.`is`(false))
+    }
+
+    @Test
+    fun getCurrencyQuotesIfApiError() {
+        val apiList = listOf(CurrencyQuote("OOXX", 123.123))
+        val error = Error("db error")
+        Mockito.`when`(repository.getCurrencyQuotesFromDb()).thenReturn(Observable.just(apiList))
+        Mockito.`when`(repository.getCurrencyQuotesFromApi("")).thenReturn(Observable.error(error))
+
+        val viewModel = CurrencyQuotesViewModel(repository)
+
+        viewModel.getCurrencyQuotes("")
+        Mockito.verify(repository, never()).getCurrencyQuotesFromApi("")
+
+        Assert.assertThat(viewModel.quotes.value, CoreMatchers.`is`(apiList))
+        Assert.assertThat(viewModel.error.value, CoreMatchers.`is`(nullValue()))
         Assert.assertThat(viewModel.loading.value, CoreMatchers.`is`(false))
     }
 
