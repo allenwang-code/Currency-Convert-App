@@ -28,6 +28,18 @@ class SupportedCurrenciesViewModelTest {
     }
 
     @Test
+    fun getSupportedCurrenciesLiveData() {
+        val viewModel = SupportedCurrenciesViewModel(repository)
+        MatcherAssert.assertThat(viewModel.supportedCurrency, CoreMatchers.not(CoreMatchers.nullValue()))
+    }
+
+    @Test
+    fun getErrorLiveData() {
+        val viewModel = SupportedCurrenciesViewModel(repository)
+        MatcherAssert.assertThat(viewModel.error, CoreMatchers.not(CoreMatchers.nullValue()))
+    }
+
+    @Test
     fun getSupportedCurrency() {
         val viewModel = SupportedCurrenciesViewModel(repository)
         MatcherAssert.assertThat(viewModel.supportedCurrency, CoreMatchers.not(CoreMatchers.nullValue()))

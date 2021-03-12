@@ -103,8 +103,13 @@ class CurrencyQuotesFragment : Fragment() {
             Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.error.observe(viewLifecycleOwner, errorObserver)
+        val loadingObserver = Observer<Boolean> { isVisible ->
+            progressBar.visibility = if(isVisible) View.VISIBLE else View.INVISIBLE
+        }
+
         viewModel.quotes.observe(viewLifecycleOwner, quotesObserver)
+        viewModel.loading.observe(viewLifecycleOwner, loadingObserver)
+        viewModel.error.observe(viewLifecycleOwner, errorObserver)
     }
 
     companion object {

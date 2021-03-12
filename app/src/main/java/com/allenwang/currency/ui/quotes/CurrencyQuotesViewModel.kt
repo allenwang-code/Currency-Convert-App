@@ -19,7 +19,9 @@ class CurrencyQuotesViewModel
     val quotes: MutableLiveData<List<CurrencyQuote>> by lazy {
         MutableLiveData<List<CurrencyQuote>>()
     }
-
+    val loading: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
     val error: MutableLiveData<Throwable> by lazy {
         MutableLiveData<Throwable>()
     }
@@ -28,6 +30,7 @@ class CurrencyQuotesViewModel
     private var compositeDisposable = CompositeDisposable()
 
     fun getCurrencyQuotes(sourceCode: String) {
+        loading.value = true
         compositeDisposable.add(
             currencyQuotesRepository.getCurrencyQuotesFromDb()
                 .subscribeOn(Schedulers.io())
@@ -38,13 +41,16 @@ class CurrencyQuotesViewModel
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ dbList ->
                     quotes.value = dbList
+                    loading.value = false
                 }, {
                     error.value = it
+                    loading.value = false
                 })
         )
     }
 
     fun updateCurrencyQuotes(sourceCode: String, secondsToUpdate: Long) {
+        loading.value = true
         updateDisposable =
             Observable.interval(secondsToUpdate, TimeUnit.SECONDS)
                 .flatMap {

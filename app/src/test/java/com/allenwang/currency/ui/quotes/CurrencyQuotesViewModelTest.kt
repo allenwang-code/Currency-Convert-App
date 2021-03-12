@@ -10,10 +10,7 @@ import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import io.reactivex.rxjava3.schedulers.TestScheduler
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
-import org.junit.Before
-import org.junit.ClassRule
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -40,6 +37,12 @@ class CurrencyQuotesViewModelTest {
     }
 
     @Test
+    fun getLoadingLiveData() {
+        val viewModel = CurrencyQuotesViewModel(repository)
+        MatcherAssert.assertThat(viewModel.loading, CoreMatchers.not(CoreMatchers.nullValue()))
+    }
+
+    @Test
     fun getErrorLiveData() {
         val viewModel = CurrencyQuotesViewModel(repository)
         MatcherAssert.assertThat(viewModel.error, CoreMatchers.not(CoreMatchers.nullValue()))
@@ -53,8 +56,11 @@ class CurrencyQuotesViewModelTest {
         Mockito.`when`(repository.getCurrencyQuotesFromApi("")).thenReturn(Observable.just(apiList))
 
         val viewModel = CurrencyQuotesViewModel(repository)
+
         viewModel.getCurrencyQuotes("")
         Mockito.verify(repository).getCurrencyQuotesFromApi("")
+        Assert.assertThat(viewModel.quotes.value, CoreMatchers.`is`(apiList))
+        Assert.assertThat(viewModel.loading.value, CoreMatchers.`is`(false))
     }
 
     @Test
@@ -64,8 +70,11 @@ class CurrencyQuotesViewModelTest {
         Mockito.`when`(repository.getCurrencyQuotesFromApi("")).thenReturn(Observable.empty())
 
         val viewModel = CurrencyQuotesViewModel(repository)
+
         viewModel.getCurrencyQuotes("")
         Mockito.verify(repository, never()).getCurrencyQuotesFromApi("")
+        Assert.assertThat(viewModel.quotes.value, CoreMatchers.`is`(apiList))
+        Assert.assertThat(viewModel.loading.value, CoreMatchers.`is`(false))
     }
 
     @Test
